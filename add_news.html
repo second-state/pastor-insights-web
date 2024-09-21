@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add news</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            max-width: 900px;
+            margin: auto;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+        .jumbotron {
+            background-color: #87CEEB; 
+            border-radius: 1rem; 
+            color: white;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+    </style>
+    <script>
+document.addEventListener("DOMContentLoaded", function(event) { 
+  var form = document.getElementById('form');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    addnews(new FormData(form));
+  });
+});
+
+function addnews(formData) {
+  document.getElementById('submit').disabled = true;
+  form_json = Object.fromEntries(formData);
+  // form_json['user_id'] = 0;
+
+  console.log("formData is:");
+  console.log(JSON.stringify(form_json));
+  fetch('https://pastor-insights-service.gaianet.ai/webhook/ahg0lRP83barIc5if7N4/add_news', {
+      method: 'POST',
+      credentials: "include",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(form_json),
+
+  }).then(function(response) { 
+    return response.json();
+
+  }).then(function(data) {
+    console.log(data);
+    if (data['status']) {
+      document.getElementById("form").style.display = "none";
+      document.getElementById("successMsg").hidden = false;
+    } else {
+      var em = document.getElementById("errorMsg");
+      em.innerHTML = data['message'];
+      em.hidden = false;
+    }
+
+  }).catch(error => {
+    console.error('Error:', error);
+    var em = document.getElementById("errorMsg");
+    em.hidden = false;
+  });
+}
+    </script>
+  </head>
+  <body>
+    <div class="jumbotron text-center">
+      <h1>Add a news story</h1>
+      <p>The next email newsletter to subscribers will be based on this story</p>
+    </div>
+    <div id="errorMsg" class="alert alert-danger" role="alert" hidden>
+      Sorry, there is a problem with your story.
+    </div>
+    <div id="successMsg" class="alert alert-success" role="alert" hidden>
+      <h4 class="alert-heading">Well done!</h4>
+    </div>
+
+    <form id="form" class="container">
+      <div class="form-group">
+        <label for="headline" class="form-label">News headline</label>
+        <input type="text" class="form-control" id="headline" name="headline">
+      </div>
+
+      <div class="form-group">
+        <label for="content" class="form-label">News story</label>
+        <textarea class="form-control" id="content" name="content" rows="12"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="url" class="form-label">Link to news story</label>
+        <input type="text" class="form-control" id="url" name="url">
+      </div>
+
+      <div class="form-group">
+        <label for="bible_verse" class="form-label">Related Bible verses</label>
+        <textarea class="form-control" id="bible_verse" name="bible_verse" rows="8"></textarea>
+      </div>
+
+      <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>
