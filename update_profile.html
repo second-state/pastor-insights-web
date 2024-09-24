@@ -6,31 +6,30 @@
     <title>Pastor Insights</title>
     <link href="index.css" rel="stylesheet"/>
     <script>
-function getURLParameter(name) {
-    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null
-}
-
-document.addEventListener("DOMContentLoaded", function(event) { 
+document.addEventListener("DOMContentLoaded", function(event) {
   var form = document.getElementById('form');
   form.addEventListener('submit', function(e){
     e.preventDefault();
-    activate(new FormData(form));
+    update(new FormData(form));
   });
-  document.getElementById('code').value = getURLParameter('code');
 });
 
-function activate(formData) {
+function update(formData) {
   document.getElementById('submit').disabled = true;
   form_json = Object.fromEntries(formData);
   // form_json['user_id'] = 0;
 
   console.log("formData is:");
   console.log(JSON.stringify(form_json));
-  fetch('https://pastor-insights-service.gaianet.ai/webhook/ahg0lRP83barIc5if7N4/activate/' + form_json['code'], {
-      method: 'GET',
+  fetch('https://pastor-insights-service.gaianet.ai/webhook/ahg0lRP83barIc5if7N4/update_profile', {
+      method: 'POST',
       credentials: "include",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(form_json),
 
-  }).then(function(response) { 
+  }).then(function(response) {
     return response.json();
 
   }).then(function(data) {
@@ -46,7 +45,8 @@ function activate(formData) {
 
   }).catch(error => {
     console.error('Error:', error);
-    document.getElementById("errorMsg").hidden = false;
+    var em = document.getElementById("errorMsg");
+    em.hidden = false;
   });
 }
     </script>
@@ -57,18 +57,19 @@ function activate(formData) {
 <div class="hero">
     <div class="hero-content">
         <h1>Everyday News from a Bible Perspective</h1>
-        <p>Confirm your email address using the activation code you received</p>
+        <p>Join the email newsletter to receive Bible-based explanations of news events tailored to your preferences!</p>
         <div class="message-box" id="successMsg" style="display:none">
-            <span style="color:green"><b>Success!</b></span> You will soon receive email from us!
+            <span style="color:green"><b>Done!</b></span> your profile is updated.
         </div>
         <div class="message-box" id="errorMsg" style="display:none">
-            <span style="color:red"><b>Sorry,</b></span> there is a problem. Please try again
+            <span style="color:red"><b>Sorry,</b></span> there is a problem. Please try again.
         </div>
         <form id="form">
             <div class="subscribe-box">
+                <textarea id="profile" name="profile" rows="5"></textarea>
                 <div class="email-and-subscribe">
-                    <input id="code" name="code" disabled>
-                    <button type="submit" id="submit">Next</button>
+                    <input type="email" id="email" name="email" disabled>
+                    <button type="submit" id="submit">Update profile</button>
                 </div>
             </div>
         </form>

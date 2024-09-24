@@ -1,31 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sign up for the Bible-based newsletter!</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <style>
-        body {
-            max-width: 900px;
-            margin: auto;
-        }
-        .container {
-            width: 90%;
-            margin: auto;
-        }
-        .jumbotron {
-            background-color: #87CEEB;
-            border-radius: 1rem;
-            color: white;
-            margin-top: 15px;
-            margin-bottom: 15px;
-            padding-top: 15px;
-            padding-bottom: 15px;
-        }
-    </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastor Insights</title>
+    <link href="index.css" rel="stylesheet"/>
     <script>
-document.addEventListener("DOMContentLoaded", function(event) { 
+document.addEventListener("DOMContentLoaded", function(event) {
   var form = document.getElementById('form');
   form.addEventListener('submit', function(e){
     e.preventDefault();
@@ -48,7 +29,7 @@ function register(formData) {
       },
       body: JSON.stringify(form_json),
 
-  }).then(function(response) { 
+  }).then(function(response) {
     return response.json();
 
   }).then(function(data) {
@@ -69,33 +50,84 @@ function register(formData) {
   });
 }
     </script>
-  </head>
-  <body>
-    <div class="jumbotron text-center">
-      <h1>Everyday news from a Bible perspective</h1>
-      <p>Join the email newsletter to receive Bible-based explanations of news events tailored to your preferences!</p>
+</head>
+<body>
+
+<!-- Hero Section -->
+<div class="hero">
+    <div class="hero-content">
+        <h1>Everyday News from a Bible Perspective</h1>
+        <p>Join the email newsletter to receive Bible-based explanations of news events tailored to your preferences!</p>
+        <div class="message-box" id="successMsg" style="display:none">
+            <span style="color:green"><b>Thank you for subscribing!</b></span> Please check your email to confirm your subscription.
+        </div>
+        <div class="message-box" id="errorMsg" style="display:none">
+            <span style="color:red"><b>Sorry,</b></span> there is a problem with your registration.
+        </div>
+        <form id="form">
+            <div class="subscribe-box">
+                <textarea id="profile" name="profile" rows="5" placeholder="Tell us a little about yourself and your preferences. Example: I am a 30 year-old mom living in Dallas. I enjoy spending time with my family and go to church every week. I am concerned about public education since my son is about to enter elementary school and rising cost of living in my area."></textarea>
+                <div class="email-and-subscribe">
+                    <input type="email" id="email" name="email" placeholder="Enter your email">
+                    <button type="submit" id="submit">Subscribe for free</button>
+                </div>
+            </div>
+            <p>Already subscribed? You can <a href="request_update.html">Update your personal profile</a></p>
+        </form>
     </div>
-    <div id="errorMsg" class="alert alert-danger" role="alert" hidden>
-      Sorry, there is a problem with your registration.
-    </div>
-    <div id="successMsg" class="alert alert-success" role="alert" hidden>
-      <h4 class="alert-heading">Well done!</h4>
-      <p>Please check your email to activate your subscription.</p>
+</div>
+
+<!-- Main Content Section -->
+<div class="container">
+    <!-- Chat Section -->
+    <div class="chat-section">
+        <h2>Chat with a virtual pastor</h2>
+        <p>Connect with us for personalized spiritual guidance.</p>
+        <div class="chat-options">
+            <a href="https://bible.us.gaianet.network/" class="chat-button">
+                <img src="web-icon.png" alt="Web Icon">
+                Chat via a browser
+            </a>
+            <a href="https://t.me/flows_english_assistant_bot" class="chat-button">
+                <img src="telegram-icon.png" alt="Telegram Icon">
+                Chat via Telegram
+            </a>
+        </div>
+        <div class="qr-codes">
+            <img src="web-qr-code.png" alt="QR Code for Web Chat">
+            <img src="telegram-qr-code.png" alt="QR Code for Telegram Chat">
+        </div>
     </div>
 
-    <form id="form" class="container">
-      <div class="form-group">
-        <label for="email" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
-      </div>
+    <!-- Email Example Section -->
+    <div class="email-example-section">
+        <h2>Example emails you will receive</h2>
+        <p>Each email is personalized with a news story to inspire you.</p>
+        <div class="email-example" onclick="window.location.href='sample_01.html';">
+            <div class="email-title">The Courageous Trek of the Unnamed</div>
+            <div class="email-content">
+                What can we learn from Rayne Beau's 900-mile journey back home? Discover how perseverance and faith led this small cat back to his family...
+            </div>
+        </div>
+        <div class="email-example" onclick="window.location.href='sample_02.html';">
+            <div class="email-title">Rate Cut Fails to Revitalize Slowing Economy</div>
+            <div class="email-content">
+                As we consider the potential impact of the rate cut on economic growth and inflation, let us remember what the Bible says in Matthew 6:31-34 ...
+            </div>
+        </div>
+        <div class="email-example" onclick="window.location.href='sample_03.html';">
+            <div class="email-title">Space exploitation vs. earthly concerns</div>
+            <div class="email-content">
+                Jared Isaacman and his team, are willing to venture into space in pursuit of scientific discovery and technological advancement, yet often neglect or overlook the needs and well-being of those who are right here on Earth ...
+            </div>
+        </div>
+    </div>
+</div>
 
-      <div class="form-group">
-        <label for="profile" class="form-label">My profile</label>
-        <textarea class="form-control" id="profile" name="profile" rows="5" placeholder="Example: I am a 30 year-old mom of a boy living in Dallas, Texas. I am staying home and working part time as an accountant. I enjoy spending time with my family and am going to church at least once a month. I am concerned about public education since my son is about to enter elementry school and raising cost of living in my area."></textarea>
-      </div>
+<!-- Footer -->
+<footer>
+    © 2024 Gaia Network. All rights reserved.
+</footer>
 
-      <button type="submit" id="submit" class="btn btn-primary">Submit</button>
-    </form>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  </body>
+</body>
 </html>
