@@ -60,16 +60,16 @@ function update(formData) {
         <h1>Everyday News from a Bible Perspective</h1>
         <p>Join the email newsletter to receive Bible-based explanations of news events tailored to your preferences!</p>
         <div class="message-box" id="successMsg" style="display:none">
-            <span style="color:green"><b>Done!</b></span> your profile is updated.
+            Done! your profile is updated.
         </div>
         <div class="message-box" id="errorMsg" style="display:none">
-            <span style="color:red"><b>Sorry,</b></span> there is a problem. Please try again.
+            Sorry, there is a problem. Please try again.
         </div>
         <form id="form">
             <div class="subscribe-box">
                 <textarea id="profile" name="profile" rows="5"></textarea>
                 <div class="email-and-subscribe">
-                    <input type="email" id="email" name="email" disabled>
+                    <input type="email" id="email" name="email" readonly>
                     <button type="submit" id="submit">Update profile</button>
                 </div>
             </div>

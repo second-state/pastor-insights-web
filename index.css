@@ -29,6 +29,16 @@
         .hero a {
             color: white;
         }
+        #successMsg {
+            color: green;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        #errorMsg {
+            color: red;
+            font-size: 28px;
+            font-weight: bold;
+        }
         .subscribe-box {
             display: flex;
             justify-content: center;
