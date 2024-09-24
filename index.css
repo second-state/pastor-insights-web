@@ -99,8 +99,7 @@
             background-color: #f1f1f1;
         }
         .chat-section {
-            /* width: 45%; */
-            flex: 1;
+            width: 45%;
             background-color: #fff;
             padding: 30px;
             box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
@@ -108,8 +107,7 @@
             text-align: center;
         } 
         .email-example-section {
-            /* width: 45%; */
-            flex: 1;
+            width: 45%;
             background-color: #fff;
             padding: 30px;
             box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
@@ -193,5 +191,12 @@
         @media (max-width: 768px) {
             .container {
                 flex-direction: column; /* Stack boxes vertically on narrow screens */
+            }
+            .chat-section {
+                width: 90%;
+                margin-bottom: 20px;
+            }
+            .email-example-section {
+                width: 90%;
             }
         }
