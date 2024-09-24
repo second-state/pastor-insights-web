@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Content</title>
+    <link href="sample.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    getMessage();
+});
+
+function getMessage() {
+    fetch('https://pastor-insights-service.gaianet.ai/webhook/ahg0lRP83barIc5if7N4/message/' + getURLParameter("mid"), {
+      method: 'GET',
+      credentials: "include",
+
+  }).then(function(response) {
+    return response.json();
+
+  }).then(function(data) {
+    console.log(data);
+    if (data['status']) {
+      document.getElementById("subject").innerHTML = data["subject"];
+      document.getElementById("body").innerHTML = marked.parse(data["body"]);
+    } else {
+      document.getElementById("subject").innerHTML = "Sorry, please try again";
+      document.getElementById("body").innerHTML = data["message"];
+    }
+  }).catch(error => {
+    console.error('Error:', error);
+    document.getElementById("subject").innerHTML = "Sorry, please try again";
+  });
+}
+    </script>
+</head>
+<body>
+
+<div class="email-container">
+    <div class="email-header">
+        <h1 id="subject">Please wait ...</h1>
+    </div>
+    <div class="email-body" id="body">
+    </div>
+    <div class="email-footer">
+        <p><a href="index.html">&larr; Back</a></p>
+    </div>
+</div>
+
+</body>
+</html>
