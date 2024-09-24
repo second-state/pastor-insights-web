@@ -93,6 +93,7 @@
         }
         .container {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-around;
             padding: 60px 20px;
             background-color: #f1f1f1;
@@ -186,4 +187,9 @@
             background-color: #333;
             color: white;
             margin-top: 40px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                flex-direction: column; /* Stack boxes vertically on narrow screens */
+            }
         }
