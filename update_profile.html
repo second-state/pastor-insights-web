@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function update(formData) {
   document.getElementById('submit').disabled = true;
+  document.getElementById('submit').innerHTML = "Please wait ...";
   form_json = Object.fromEntries(formData);
   // form_json['user_id'] = 0;
 
@@ -36,17 +37,17 @@ function update(formData) {
     console.log(data);
     if (data['status']) {
       document.getElementById("form").style.display = "none";
-      document.getElementById("successMsg").hidden = false;
+      document.getElementById("successMsg").style.display = "block";
     } else {
       var em = document.getElementById("errorMsg");
       em.innerHTML = data['message'];
-      em.hidden = false;
+      em.style.display = "block";
     }
 
   }).catch(error => {
     console.error('Error:', error);
     var em = document.getElementById("errorMsg");
-    em.hidden = false;
+    em.style.display = "block";
   });
 }
     </script>
