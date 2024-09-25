@@ -27,7 +27,7 @@ function getMessage() {
     console.log(data);
     if (data['status']) {
       document.getElementById("subject").innerHTML = data["subject"];
-      document.getElementById("body").innerHTML = "<b><i>" + data["question"] + "</i></b><br><br>" + marked.parse(data["body"]);
+      document.getElementById("body").innerHTML = "<b><i>" + data["question"] + "</i></b><br>" + marked.parse(data["body"]);
     } else {
       document.getElementById("subject").innerHTML = "Sorry, please try again";
       document.getElementById("body").innerHTML = data["message"];
