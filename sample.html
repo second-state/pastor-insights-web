@@ -44,6 +44,7 @@ function getMessage() {
     console.log(data);
     if (data['status']) {
       document.title = data["subject"];
+      document.getElementById('share-btn').setAttribute('data-title', data["subject"]);
       document.getElementById("subject").innerHTML = data["subject"];
       document.getElementById("body").innerHTML = "<b><i>" + data["question"] + "</i></b><br>" + marked.parse(data["body"]);
     } else {
@@ -65,7 +66,7 @@ function getMessage() {
     </div>
     <div class="email-body" id="body">
     </div>
-    <div class="share-btn">
+    <div class="share-btn" id="share-btn">
           <a class="btn-facebook" data-id="fb"><i class="fab fa-facebook-square"></i> Facebook</a>
           <a class="btn-twitter" data-id="tw"><i class="fab fa-twitter"></i> Twitter</a>
           <a class="btn-telegram" data-id="tg"><i class="fab fa-telegram"></i> Telegram</a>
