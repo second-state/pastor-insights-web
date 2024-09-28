@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email Content</title>
     <link href="sample.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <style>
+    .share-btn > a {
+      display: inline-block;
+      border: 1px solid #000080;
+      border-radius: 20px;
+      padding: 5px;
+      font-size: 14px;
+      margin-bottom: 3px;
+      font-family: Verdana, Arial;
+      width: 90px;
+      text-align: center;
+    }
+    .share-btn > a:hover {
+      cursor: pointer;
+    }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
 function getURLParameter(name) {
@@ -47,10 +64,21 @@ function getMessage() {
     </div>
     <div class="email-body" id="body">
     </div>
+    <div class="share-btn">
+          <a class="btn-facebook" data-id="fb"><i class="fab fa-facebook-square"></i> Facebook</a>
+          <a class="btn-twitter" data-id="tw"><i class="fab fa-twitter"></i> Twitter</a>
+          <a class="btn-telegram" data-id="tg"><i class="fab fa-telegram"></i> Telegram</a>
+          <a class="btn-reddit" data-id="re"><i class="fab fa-reddit"></i> Reddit</a>
+          <a class="btn-linkedin" data-id="in"><i class="fab fa-linkedin"></i> LinkedIn</a>
+          <a class="btn-whatsapp" data-id="wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+          <a class="btn-mail" data-id="mail"><i class="fas fa-at"></i> Email</a>
+    </div>
     <div class="email-footer">
         <p><a href="index.html">&larr; Back</a></p>
     </div>
 </div>
+
+<script src="//cdn.jsdelivr.net/npm/share-buttons/dist/share-buttons.js"></script>
 
 </body>
 </html>
