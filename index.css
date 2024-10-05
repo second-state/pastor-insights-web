@@ -124,7 +124,7 @@
             align-items: center;
             margin-top: 40px;
         }
-        .chat-options .chat-button {
+        .chat-button {
             width: 200px;
             padding: 15px;
             background-color: #007BFF;
@@ -139,12 +139,12 @@
             display: flex;
             align-items: center;
         }
-        .chat-options .chat-button img {
+        .chat-button img {
             width: 24px;
             height: 24px;
             margin-right: 10px;
         }
-        .chat-options .chat-button:hover {
+        .chat-button:hover {
             background-color: #0056b3;
         }
         .qr-codes {
@@ -153,8 +153,8 @@
             margin-top: 20px;
         }
         .qr-codes img {
-            width: 120px;
-            height: 120px;
+            width: 280px;
+            height: 280px;
         }
         .email-example-section p {
             margin-bottom: 20px;
