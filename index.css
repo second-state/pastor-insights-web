@@ -135,6 +135,7 @@
             text-decoration: none;
             font-size: 16px;
             /* margin: 0 10px; */
+            margin: auto;
             transition: background-color 0.3s;
             display: flex;
             align-items: center;
