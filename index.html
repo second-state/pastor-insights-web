@@ -67,7 +67,13 @@ function register(formData) {
         <form id="form">
             <p>Join the newsletter to receive Bible-based insights of news events. Each email is written specifically for you!</p>
             <div class="subscribe-box">
-                <textarea id="profile" name="profile" rows="5" placeholder="Tell us a little about yourself and your preferences so that we can craft emails specifically for you. Example: I am a 30 year-old mom living in Dallas. I enjoy spending time with my family and go to church every week. I am concerned about public education since my son is about to enter elementary school and rising cost of living in my area."></textarea>
+                <div>
+                    I am a
+                    <select name="profile" id="profile">
+                        <option value="traditional">traditional Christian, and prefer strict Bible interpretations.</option>
+                        <option value="progressive">progressive Christian, and believe that beliefs evolve to reflect some cultural changes.</option>
+                    </select>
+                </div>
                 <div class="email-and-subscribe">
                     <input type="email" id="email" name="email" placeholder="Enter your email">
                     <button type="submit" id="submit">Subscribe for free</button>

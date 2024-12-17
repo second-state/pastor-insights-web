@@ -27,21 +27,24 @@
     <script>
 document.addEventListener("DOMContentLoaded", function(event) { 
   var form = document.getElementById('form');
-  form.addEventListener('submit', function(e){
+  form.addEventListener('generate', function(e){
     e.preventDefault();
-    addnews(new FormData(form));
+    generate(new FormData(form));
+  });
+  form.addEventListener('send', function(e){
+    e.preventDefault();
+    send(new FormData(form));
   });
 });
 
-function addnews(formData) {
-  document.getElementById('submit').disabled = true;
-  document.getElementById('submit').innerHTML = "Please wait ...";
+function generate (formData) {
+  document.getElementById('generate').disabled = true;
+  document.getElementById('generate').innerHTML = "Please wait ...";
   form_json = Object.fromEntries(formData);
-  // form_json['user_id'] = 0;
 
   console.log("formData is:");
   console.log(JSON.stringify(form_json));
-  fetch('https://pastor-insights-service.gaianet.ai/webhook/ahg0lRP83barIc5if7N4/add_news', {
+  fetch('https://pastor-insights-service.gaianet.ai/webhook/ahg0lRP83barIc5if7N4/generate_message', {
       method: 'POST',
       credentials: "include",
       headers: {
@@ -55,8 +58,12 @@ function addnews(formData) {
   }).then(function(data) {
     console.log(data);
     if (data['status']) {
-      document.getElementById("form").style.display = "none";
-      document.getElementById("successMsg").style.display = "block";
+      document.getElementById("question").value = data['question'];
+      document.getElementById("subject").value = data['subject'];
+      document.getElementById("body").value = data['body'];
+
+      document.getElementById('generate').disabled = false;
+      document.getElementById('generate').innerHTML = "Generate again";
     } else {
       var em = document.getElementById("errorMsg");
       em.innerHTML = data['message'];
@@ -68,6 +75,59 @@ function addnews(formData) {
     var em = document.getElementById("errorMsg");
     em.style.display = "block";
   });
+}
+
+function send (formData) {
+  document.getElementById('send').disabled = true;
+  document.getElementById('send').innerHTML = "Please wait ...";
+  form_json = Object.fromEntries(formData);
+
+  console.log("formData is:");
+  console.log(JSON.stringify(form_json));
+
+  saved = false;
+  fetch('https://pastor-insights-service.gaianet.ai/webhook/ahg0lRP83barIc5if7N4/save_message', {
+      method: 'POST',
+      credentials: "include",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(form_json),
+
+  }).then(function(response) { 
+    return response.json();
+
+  }).then(function(data) {
+    console.log(data);
+    if (data['status']) {
+      saved = true;
+    } else {
+      var em = document.getElementById("errorMsg");
+      em.innerHTML = data['message'];
+      em.style.display = "block";
+    }
+
+  }).catch(error => {
+    console.error('Error:', error);
+    var em = document.getElementById("errorMsg");
+    em.style.display = "block";
+  });
+
+  if (saved) {
+    fetch('https://pastor-insights-service.gaianet.ai/webhook/ahg0lRP83barIc5if7N4/send_message/' + form_json['passcode'] + '/' + form_json['profile'], {
+      method: 'GET',
+      credentials: "include"
+    }).then(function(response) { 
+      return response.json();
+
+    }).then(function(data) {
+      console.log(data);
+      if (data['status']) {
+        document.getElementById("form").style.display = "none";
+        document.getElementById("successMsg").style.display = "block";
+      }
+    });
+  }
 }
     </script>
   </head>
@@ -88,7 +148,15 @@ function addnews(formData) {
         <label for="passcode" class="form-label">Passcode</label>
         <input type="text" class="form-control" id="passcode" name="passcode">
       </div>
-      
+
+      <div class="form-group">
+        <label for="profile" class="form-label">Generate a message for</label>
+        <select class="form-control" name="profile" id="profile">
+            <option value="traditional">traditional Christian, and prefer strict Bible interpretations.</option>
+            <option value="progressive">progressive Christian, and believe that beliefs evolve to reflect some cultural changes.</option>
+        </select>
+      </div>
+
       <div class="form-group">
         <label for="headline" class="form-label">News headline</label>
         <input type="text" class="form-control" id="headline" name="headline">
@@ -109,7 +177,25 @@ function addnews(formData) {
         <textarea class="form-control" id="bible_verse" name="bible_verse" rows="8"></textarea>
       </div>
 
-      <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+      <hr>
+
+      <div class="form-group">
+        <label for="question" class="form-label">A question the content answers</label>
+        <textarea class="form-control" id="question" name="question" rows="2"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="subject" class="form-label">Message subject</label>
+        <textarea class="form-control" id="subject" name="subject" rows="2"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="body" class="form-label">Message body</label>
+        <textarea class="form-control" id="body" name="body" rows="8"></textarea>
+      </div>
+
+      <button type="submit" id="generate" class="btn btn-primary">Generate</button>
+      <button type="submit" id="send" class="btn btn-primary">Send</button>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
