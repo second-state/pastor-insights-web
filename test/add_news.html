@@ -27,11 +27,15 @@
     <script>
 document.addEventListener("DOMContentLoaded", function(event) { 
   var form = document.getElementById('form');
-  form.addEventListener('generate', function(e){
+
+  var generate_button = document.getElementById('generate');
+  generate_button.addEventListener('click', function(e){
     e.preventDefault();
     generate(new FormData(form));
   });
-  form.addEventListener('send', function(e){
+
+  var send_button = document.getElementById('send');
+  send_button.addEventListener('click', function(e){
     e.preventDefault();
     send(new FormData(form));
   });
@@ -177,6 +181,7 @@ function send (formData) {
         <textarea class="form-control" id="bible_verse" name="bible_verse" rows="8"></textarea>
       </div>
 
+      <button type="submit" id="generate" class="btn btn-primary">Generate</button>
       <hr>
 
       <div class="form-group">
@@ -194,7 +199,6 @@ function send (formData) {
         <textarea class="form-control" id="body" name="body" rows="8"></textarea>
       </div>
 
-      <button type="submit" id="generate" class="btn btn-primary">Generate</button>
       <button type="submit" id="send" class="btn btn-primary">Send</button>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
