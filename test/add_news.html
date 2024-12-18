@@ -118,6 +118,7 @@ function send (formData) {
   });
 
   if (saved) {
+    console.log("Sending email now");
     fetch('https://pastor-insights-service.gaianet.ai/webhook/2iMg3xL5cGDgVoDjoNjE/send_message/' + form_json['passcode'] + '/' + form_json['profile'], {
       method: 'GET',
       credentials: "include"
