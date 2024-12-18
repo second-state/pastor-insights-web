@@ -90,7 +90,7 @@ function send (formData) {
   console.log(JSON.stringify(form_json));
 
   saved = false;
-  fetch('https://pastor-insights-service.gaianet.ai/webhook/2iMg3xL5cGDgVoDjoNjE/save_message', {
+  fetch('https://pastor-insights-service.gaianet.ai/webhook/2iMg3xL5cGDgVoDjoNjE/save_message/' + form_json['passcode'], {
       method: 'POST',
       credentials: "include",
       headers: {
