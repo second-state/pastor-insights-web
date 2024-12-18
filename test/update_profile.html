@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastor Insights</title>
+    <link href="index.css" rel="stylesheet"/>
+    <script>
+document.addEventListener("DOMContentLoaded", function(event) {
+  var form = document.getElementById('form');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    update(new FormData(form));
+  });
+});
+
+function update(formData) {
+  document.getElementById('submit').disabled = true;
+  document.getElementById('submit').innerHTML = "Please wait ...";
+  form_json = Object.fromEntries(formData);
+  // form_json['user_id'] = 0;
+
+  console.log("formData is:");
+  console.log(JSON.stringify(form_json));
+  fetch('https://pastor-insights-service.gaianet.ai/webhook/2iMg3xL5cGDgVoDjoNjE/update_profile', {
+      method: 'POST',
+      credentials: "include",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(form_json),
+
+  }).then(function(response) {
+    return response.json();
+
+  }).then(function(data) {
+    console.log(data);
+    if (data['status']) {
+      document.getElementById("form").style.display = "none";
+      document.getElementById("successMsg").style.display = "block";
+    } else {
+      var em = document.getElementById("errorMsg");
+      em.innerHTML = data['message'];
+      em.style.display = "block";
+    }
+
+  }).catch(error => {
+    console.error('Error:', error);
+    var em = document.getElementById("errorMsg");
+    em.style.display = "block";
+  });
+}
+    </script>
+</head>
+<body>
+
+<!-- Hero Section -->
+<div class="hero">
+    <div class="hero-content">
+        <h1>Spiritual insights just for you</h1>
+        <div class="message-box" id="successMsg" style="display:none">
+            Done! your profile is updated.
+        </div>
+        <div class="message-box" id="errorMsg" style="display:none">
+            Sorry, there is a problem. Please try again.
+        </div>
+        <form id="form">
+            <p>Update your profile and tell us more about your preferences!</p>
+            <div class="subscribe-box">
+                <textarea id="profile" name="profile" rows="5"></textarea>
+                <div class="email-and-subscribe">
+                    <input type="email" id="email" name="email" readonly>
+                    <button type="submit" id="submit">Update profile</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    © 2024 Gaia Network. All rights reserved.
+</footer>
+
+</body>
+</html>
