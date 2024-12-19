@@ -92,7 +92,6 @@ function send (formData) {
   console.log("formData is:");
   console.log(JSON.stringify(form_json));
 
-  saved = false;
   fetch('https://pastor-insights-service.gaianet.ai/webhook/2iMg3xL5cGDgVoDjoNjE/save_message/' + form_json['passcode'], {
       method: 'POST',
       credentials: "include",
@@ -105,10 +104,24 @@ function send (formData) {
     return response.json();
 
   }).then(function(data) {
+
     console.log(data);
     if (data['status']) {
-      saved = true;
-      console.log("Set saved=true");
+      console.log("Sending message now");
+      fetch('https://pastor-insights-service.gaianet.ai/webhook/2iMg3xL5cGDgVoDjoNjE/send_message/' + form_json['passcode'] + '/' + form_json['profile'], {
+        method: 'GET',
+        credentials: "include"
+
+      }).then(function(response2) { 
+        return response2.json();
+
+      }).then(function(data2) {
+        console.log(data2);
+        if (data2['status']) {
+          document.getElementById('send').innerHTML = "Done!";
+        }
+      });
+        
     } else {
       var em = document.getElementById("errorMsg");
       em.innerHTML = data['message'];
@@ -120,25 +133,6 @@ function send (formData) {
     var em = document.getElementById("errorMsg");
     em.style.display = "block";
   });
-
-  console.log("Trying to start sending");
-  if (saved) {
-    console.log("Sending message now");
-    fetch('https://pastor-insights-service.gaianet.ai/webhook/2iMg3xL5cGDgVoDjoNjE/send_message/' + form_json['passcode'] + '/' + form_json['profile'], {
-      method: 'GET',
-      credentials: "include"
-
-    }).then(function(response) { 
-      return response.json();
-
-    }).then(function(data) {
-      console.log(data);
-      if (data['status']) {
-        document.getElementById("form").style.display = "none";
-        document.getElementById("successMsg").style.display = "block";
-      }
-    });
-  }
 }
     </script>
   </head>
