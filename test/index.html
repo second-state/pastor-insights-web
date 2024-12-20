@@ -67,12 +67,23 @@ function register(formData) {
         <form id="form">
             <p>Join the newsletter to receive Bible-based insights of news events. Each email is written specifically for you!</p>
             <div class="subscribe-box">
-                <div>
-                    I am a
-                    <select name="profile" id="profile">
-                        <option value="traditional">traditional Christian, and prefer strict Bible interpretations.</option>
-                        <option value="progressive">progressive Christian, and believe that beliefs evolve to reflect some cultural changes.</option>
-                    </select>
+                <div style="margin-bottom: 0.8rem;white-space: nowrap;display: flex;font-size: 1.3rem;justify-content: center;">
+                    <div style="padding: 0.2rem 0;">I am a</div>
+<!--                    <select style="background-color:rgba(255,255,255,0.1);color: #ffffff;border: 0;font-weight: bold;font-size: 1.1rem;padding:0.2rem;" name="profile" id="profile">-->
+<!--                        <option value="traditional">traditional Christian, and prefer strict Bible interpretations.</option>-->
+<!--                        <option value="progressive">progressive Christian, and believe that beliefs evolve to reflect some cultural changes.</option>-->
+<!--                    </select>-->
+                    <div style="position: relative;margin-left: 0.3rem;">
+                        <div id="selectBody" onclick="openOptionList()" style="border-radius: 0.2rem;background-color: rgba(255,255,255,0.1);color: #ffffff;font-weight: bold;padding:0.2rem 0.6rem 0.2rem 0.2rem;display: flex;align-items: center;cursor: pointer;">
+                            <span id="profile-text" style="text-align: start;">traditional Christian, and prefer strict Bible interpretations.</span>
+                            <img src="select.svg" style="height: 1.1rem;margin-left: 0.5rem;">
+                        </div>
+                        <div id="optionList" style="display: none;white-space: normal;text-shadow: 1px 1px rgba(51,51,51,0.45);width: 100%;top: 100%;left: 0;background-color: rgb(102,177,201);position: absolute;z-index: 99;color: #ffffff;text-align: start;">
+                            <div style="padding: 0.7rem 0.2rem 0.4rem; cursor: pointer;" id="traditional" class="option" onclick="selectOption(event)">traditional Christian, and prefer strict Bible interpretations.</div>
+                            <div style="padding: 0.4rem 0.2rem 0.7rem; cursor: pointer;border-radius: 0 0 0.2rem 0.2rem" id="progressive" class="option" onclick="selectOption(event)">progressive Christian, and believe that beliefs evolve to reflect some cultural changes.</div>
+                        </div>
+                    </div>
+                    <input style="display: none;" type="text" value="traditional" name="profile" id="profile">
                 </div>
                 <div class="email-and-subscribe">
                     <input type="email" id="email" name="email" placeholder="Enter your email">
@@ -147,6 +158,35 @@ function register(formData) {
 <footer>
     © 2024 Gaia. All rights reserved.
 </footer>
+<script>
+    const profile = document.getElementById("profile")
+    const profileText = document.getElementById("profile-text")
+    const selectBody = document.getElementById("selectBody")
+    const optionList = document.getElementById("optionList")
+    const selectOption = (e) => {
+        closeOptionList()
+        profile.value = e.target.id
+        profileText.innerText = e.target.innerText
+    }
 
+    const openOptionList = () => {
+        selectBody.style.backgroundColor = "#66B1C9";
+        selectBody.style.borderRadius="0.2rem 0.2rem 0 0";
+        optionList.style.display="block";
+        optionList.style.borderRadius="0 0 0.2rem 0.2rem";
+    }
+
+    const closeOptionList = () => {
+        selectBody.style.backgroundColor = "rgba(255,255,255,0.1)";
+        selectBody.style.borderRadius="0.2rem";
+        optionList.style.display="none";
+    }
+
+    document.addEventListener('click', function (event) {
+        if (!event.target.closest('#selectBody')) {
+            closeOptionList()
+        }
+    })
+</script>
 </body>
 </html>
