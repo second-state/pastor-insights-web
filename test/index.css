@@ -5,6 +5,9 @@
             background-color: #f9f9f9;
             color: #333;
         }
+        .option:hover{
+            background-color: #3E8FA8;
+        }
         .hero {
             background-image: url('hero.png'); /* Christian theme image */
             background-size: cover;
@@ -189,6 +192,9 @@
             color: white;
             margin-top: 40px;
         }
+        #profile-text {
+            white-space: nowrap;
+        }
         @media (max-width: 768px) {
             .container {
                 flex-direction: column; /* Stack boxes vertically on narrow screens */
@@ -200,4 +206,8 @@
             .email-example-section {
                 width: 90%;
             }
+            #profile-text {
+                white-space: normal;
+            }
+
         }
