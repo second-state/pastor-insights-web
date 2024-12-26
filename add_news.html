@@ -48,7 +48,7 @@ function generate (formData) {
 
   console.log("formData is:");
   console.log(JSON.stringify(form_json));
-  fetch('https://pastor-insights-service.gaianet.ai/webhook/ahg0lRP83barIc5if7N4/generate_message', {
+  fetch('https://flows.pastorinsights.ai/webhook/ahg0lRP83barIc5if7N4/generate_message', {
       method: 'POST',
       credentials: "include",
       headers: {
@@ -92,7 +92,7 @@ function send (formData) {
   console.log("formData is:");
   console.log(JSON.stringify(form_json));
 
-  fetch('https://pastor-insights-service.gaianet.ai/webhook/ahg0lRP83barIc5if7N4/save_message/' + form_json['passcode'], {
+  fetch('https://flows.pastorinsights.ai/webhook/ahg0lRP83barIc5if7N4/save_message/' + form_json['passcode'], {
       method: 'POST',
       credentials: "include",
       headers: {
@@ -108,7 +108,7 @@ function send (formData) {
     console.log(data);
     if (data['status']) {
       console.log("Sending message now");
-      fetch('https://pastor-insights-service.gaianet.ai/webhook/ahg0lRP83barIc5if7N4/send_message/' + form_json['passcode'] + '/' + form_json['profile'], {
+      fetch('https://flows.pastorinsights.ai/webhook/ahg0lRP83barIc5if7N4/send_message/' + form_json['passcode'] + '/' + form_json['profile'], {
         method: 'GET',
         credentials: "include"
 
