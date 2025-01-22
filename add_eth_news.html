@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add news</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            max-width: 900px;
+            margin: auto;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+        .jumbotron {
+            background-color: #87CEEB; 
+            border-radius: 1rem; 
+            color: white;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+    </style>
+    <script>
+document.addEventListener("DOMContentLoaded", function(event) { 
+  var form = document.getElementById('form');
+
+  var generate_button = document.getElementById('generate');
+  generate_button.addEventListener('click', function(e){
+    e.preventDefault();
+    generate(new FormData(form));
+  });
+
+  var send_button = document.getElementById('send');
+  send_button.addEventListener('click', function(e){
+    e.preventDefault();
+    send(new FormData(form));
+  });
+});
+
+function generate (formData) {
+  document.getElementById('generate').disabled = true;
+  document.getElementById('generate').innerHTML = "Please wait ...";
+  form_json = Object.fromEntries(formData);
+
+  console.log("formData is:");
+  console.log(JSON.stringify(form_json));
+  fetch('https://flows.pastorinsights.ai/webhook/sEfdIG2ujoZDKwYkVATM/generate_message', {
+      method: 'POST',
+      credentials: "include",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(form_json),
+
+  }).then(function(response) { 
+    return response.json();
+
+  }).then(function(data) {
+    console.log(data);
+    if (data['status']) {
+      document.getElementById("subject").value = data['subject'];
+      document.getElementById("body").value = data['body'];
+
+      document.getElementById('generate').disabled = false;
+      document.getElementById('generate').innerHTML = "Generate again";
+
+      document.getElementById('send').disabled = false;
+      document.getElementById('send').innerHTML = "Send";
+    } else {
+      var em = document.getElementById("errorMsg");
+      em.innerHTML = data['message'];
+      em.style.display = "block";
+    }
+
+  }).catch(error => {
+    console.error('Error:', error);
+    var em = document.getElementById("errorMsg");
+    em.style.display = "block";
+  });
+}
+
+function send (formData) {
+  document.getElementById('send').disabled = true;
+  document.getElementById('send').innerHTML = "Please wait ...";
+  form_json = Object.fromEntries(formData);
+
+  console.log("formData is:");
+  console.log(JSON.stringify(form_json));
+
+  fetch('https://flows.pastorinsights.ai/webhook/sEfdIG2ujoZDKwYkVATM/save_message/' + form_json['passcode'], {
+      method: 'POST',
+      credentials: "include",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(form_json),
+
+  }).then(function(response) { 
+    return response.json();
+
+  }).then(function(data) {
+
+    console.log(data);
+    if (data['status']) {
+      console.log("Sending message now");
+      fetch('https://flows.pastorinsights.ai/webhook/sEfdIG2ujoZDKwYkVATM/send_message/' + form_json['passcode'] + '/' + form_json['profile'], {
+        method: 'GET',
+        credentials: "include"
+
+      }).then(function(response2) { 
+        return response2.json();
+
+      }).then(function(data2) {
+        console.log(data2);
+        if (data2['status']) {
+          document.getElementById('send').innerHTML = "Done!";
+        }
+      });
+        
+    } else {
+      var em = document.getElementById("errorMsg");
+      em.innerHTML = data['message'];
+      em.style.display = "block";
+    }
+
+  }).catch(error => {
+    console.error('Error:', error);
+    var em = document.getElementById("errorMsg");
+    em.style.display = "block";
+  });
+}
+    </script>
+  </head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T3YP6PHS4N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-T3YP6PHS4N');
+  </script>
+
+  <body>
+    <div class="jumbotron text-center">
+      <h1>ETH ecosystem update</h1>
+      <p>The next TG blast message will be based on this update</p>
+    </div>
+    <div id="errorMsg" class="alert alert-danger" role="alert" hidden>
+      Sorry, there is a problem with your update.
+    </div>
+    <div id="successMsg" class="alert alert-success" role="alert" hidden>
+      <h4 class="alert-heading">Well done!</h4>
+    </div>
+
+    <form id="form" class="container">
+      <div class="form-group">
+        <label for="passcode" class="form-label">Passcode</label>
+        <input type="text" class="form-control" id="passcode" name="passcode">
+      </div>
+
+      <div class="form-group">
+        <label for="source" class="form-label">ETH price trend and news articles</label>
+        <textarea class="form-control" id="source" name="source" rows="12"></textarea>
+      </div>
+
+      <br>
+      <button type="submit" id="generate" class="btn btn-primary">Generate</button>
+      <hr>
+
+      <div class="form-group">
+        <label for="subject" class="form-label">Message subject</label>
+        <textarea class="form-control" id="subject" name="subject" rows="2"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="body" class="form-label">Message body</label>
+        <textarea class="form-control" id="body" name="body" rows="8"></textarea>
+      </div>
+
+      <br>
+      <button type="submit" id="send" class="btn btn-primary">Send</button>
+      <hr>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>
