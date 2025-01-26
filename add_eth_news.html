@@ -107,7 +107,7 @@ function send (formData) {
     console.log(data);
     if (data['status']) {
       console.log("Sending message now");
-      fetch('https://flows.pastorinsights.ai/webhook/sEfdIG2ujoZDKwYkVATM/send_message/' + form_json['passcode'] + '/' + form_json['profile'], {
+      fetch('https://flows.pastorinsights.ai/webhook/sEfdIG2ujoZDKwYkVATM/send_message/' + form_json['passcode'], {
         method: 'GET',
         credentials: "include"
 
