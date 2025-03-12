@@ -62,8 +62,8 @@ function generate (formData) {
   }).then(function(data) {
     console.log(data);
     if (data['status']) {
-      document.getElementById("subject").value = data['subject'];
-      document.getElementById("body").value = data['body'];
+      document.getElementById("subject").value = data['price'];
+      document.getElementById("body").value = data['news'] + "\n\n------------\n\nEthereum tip of the day: "  + data['term'] + "\n\n" + data['term_exp'] + "\n\nAsk Google: " + data['google_url'];
 
       document.getElementById('generate').disabled = false;
       document.getElementById('generate').innerHTML = "Generate again";
@@ -164,8 +164,13 @@ function send (formData) {
       </div>
 
       <div class="form-group">
-        <label for="source" class="form-label">ETH price trend and news articles</label>
-        <textarea class="form-control" id="source" name="source" rows="12"></textarea>
+        <label for="source" class="form-label">ETH price trend</label>
+        <textarea class="form-control" id="price_movement" name="price_movement" rows="12"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="source" class="form-label">ETH news</label>
+        <textarea class="form-control" id="news_stories" name="news_stories" rows="12"></textarea>
       </div>
 
       <br>
