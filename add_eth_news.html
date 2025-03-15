@@ -39,6 +39,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     e.preventDefault();
     send(new FormData(form));
   });
+
+  document.getElementById('subject').addEventListener('input', showCharCount);
+  document.getElementById('body').addEventListener('input', showCharCount);
 });
 
 function generate (formData) {
@@ -63,7 +66,7 @@ function generate (formData) {
     console.log(data);
     if (data['status']) {
       document.getElementById("subject").value = data['price'];
-      document.getElementById("body").value = data['news'] + "\n\n------------\n\nEthereum tip of the day: "  + data['term'] + "\n\n" + data['term_exp'] + "\n\nAsk Google: " + data['google_url'];
+      document.getElementById("body").value = data['news'] + "\n\n---\n\nEthereum tip of the day: "  + data['term'] + "\n\n" + data['term_exp'] + "\n\nAsk Google: " + data['google_url'];
 
       document.getElementById('generate').disabled = false;
       document.getElementById('generate').innerHTML = "Generate again";
@@ -81,6 +84,17 @@ function generate (formData) {
     var em = document.getElementById("errorMsg");
     em.style.display = "block";
   });
+
+  showCharCount();
+}
+
+function showCharCount() {
+    var count = document.getElementById("subject").value.length + document.getElementById("body").value.length;
+    if (count < 4000) {
+        document.getElementById("charCount").textContent = "Message length is " + count;
+    } else {
+        document.getElementById("charCount").textContent = "THE MESSAGE MAYBE TOO LONG! PLS eEDIT IT DOWN OR RE_GENERATE. The current message length is " + count;
+    }
 }
 
 function send (formData) {
@@ -186,6 +200,8 @@ function send (formData) {
         <label for="body" class="form-label">Message body</label>
         <textarea class="form-control" id="body" name="body" rows="8"></textarea>
       </div>
+
+      <div id="charCount"></div>
 
       <br>
       <button type="submit" id="send" class="btn btn-primary">Send</button>
