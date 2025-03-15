@@ -73,6 +73,9 @@ function generate (formData) {
 
       document.getElementById('send').disabled = false;
       document.getElementById('send').innerHTML = "Send";
+
+      showCharCount();
+
     } else {
       var em = document.getElementById("errorMsg");
       em.innerHTML = data['message'];
@@ -84,8 +87,6 @@ function generate (formData) {
     var em = document.getElementById("errorMsg");
     em.style.display = "block";
   });
-
-  showCharCount();
 }
 
 function showCharCount() {
